@@ -11,15 +11,19 @@
             e.preventDefault();
             
             const $button = $(this);
-            const $statusMessage = $('#ves-change-getter-status-message');
             
-            // Show loading state
-            $button.prop('disabled', true).addClass('opacity-50');
-            $button.find('.loading-indicator').show();
-            $button.find('.button-text').text('Actualizando datos...');
-            
-            // Clear previous messages
-            $statusMessage.removeClass('bg-green-100 text-green-800 bg-red-100 text-red-800').empty();
+            // Show loading state with SweetAlert2
+            Swal.fire({
+                title: 'Actualizando datos...',
+                text: 'Por favor espere mientras obtenemos la información más reciente',
+                icon: 'info',
+                allowOutsideClick: false,
+                allowEscapeKey: false,
+                showConfirmButton: false,
+                didOpen: () => {
+                    Swal.showLoading();
+                }
+            });
             
             // Make AJAX request
             $.ajax({
@@ -31,31 +35,32 @@
                 },
                 success: function(response) {
                     if (response.success) {
-                        $statusMessage.addClass('bg-green-100 text-green-800 p-4 rounded-md mb-4')
-                            .html('<p>' + response.data.message + '</p>');
-                            
-                        // Reload the page after a short delay to show updated data
-                        setTimeout(function() {
+                        Swal.fire({
+                            title: '¡Éxito!',
+                            text: response.data.message,
+                            icon: 'success',
+                            timer: 1500,
+                            showConfirmButton: false
+                        }).then(() => {
+                            // Reload the page to show updated data
                             window.location.reload();
-                        }, 1500);
+                        });
                     } else {
-                        $statusMessage.addClass('bg-red-100 text-red-800 p-4 rounded-md mb-4')
-                            .html('<p>' + response.data.message + '</p>');
-                            
-                        // Reset button
-                        $button.prop('disabled', false).removeClass('opacity-50');
-                        $button.find('.loading-indicator').hide();
-                        $button.find('.button-text').text('Actualizar datos');
+                        Swal.fire({
+                            title: 'Error',
+                            text: response.data.message || 'Ha ocurrido un error.',
+                            icon: 'error',
+                            confirmButtonText: 'Cerrar'
+                        });
                     }
                 },
                 error: function() {
-                    $statusMessage.addClass('bg-red-100 text-red-800 p-4 rounded-md mb-4')
-                        .html('<p>Error al comunicarse con el servidor.</p>');
-                        
-                    // Reset button
-                    $button.prop('disabled', false).removeClass('opacity-50');
-                    $button.find('.loading-indicator').hide();
-                    $button.find('.button-text').text('Actualizar datos');
+                    Swal.fire({
+                        title: 'Error',
+                        text: 'Error al comunicarse con el servidor.',
+                        icon: 'error',
+                        confirmButtonText: 'Cerrar'
+                    });
                 }
             });
         });

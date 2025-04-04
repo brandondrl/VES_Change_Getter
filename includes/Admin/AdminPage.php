@@ -35,6 +35,14 @@ class AdminPage {
             // Asegurar que los dashicons estén cargados
             wp_enqueue_style('dashicons');
             
+            // Enqueue SweetAlert2 CSS
+            wp_enqueue_style(
+                'sweetalert2',
+                VES_CHANGE_GETTER_URL . 'assets/css/sweetalert2.min.css',
+                [],
+                $version
+            );
+            
             // Enqueue Tailwind CSS
             wp_enqueue_style(
                 'ves-change-getter-tailwind',
@@ -47,7 +55,7 @@ class AdminPage {
             wp_enqueue_style(
                 'ves-change-getter-admin',
                 VES_CHANGE_GETTER_URL . 'assets/css/admin.css',
-                ['ves-change-getter-tailwind', 'dashicons'],
+                ['ves-change-getter-tailwind', 'dashicons', 'sweetalert2'],
                 $version
             );
         }
@@ -60,10 +68,20 @@ class AdminPage {
         $screen = get_current_screen();
         
         if (isset($screen->id) && $screen->id === 'toplevel_page_ves-change-getter') {
+            // Enqueue SweetAlert2
+            wp_enqueue_script(
+                'sweetalert2',
+                VES_CHANGE_GETTER_URL . 'assets/js/sweetalert2.all.min.js',
+                [],
+                VES_CHANGE_GETTER_VERSION,
+                true
+            );
+            
+            // Enqueue admin script
             wp_enqueue_script(
                 'ves-change-getter-admin',
                 VES_CHANGE_GETTER_URL . 'assets/js/admin.js',
-                ['jquery'],
+                ['jquery', 'sweetalert2'],
                 VES_CHANGE_GETTER_VERSION,
                 true
             );
@@ -92,13 +110,39 @@ class AdminPage {
         if ($force_update) {
             error_log('VES Change Getter - Solicitada actualización forzada');
             $result = RatesModel::fetch_and_store_rates();
+            
+            // Preparar mensajes para SweetAlert
+            $js_script = '';
             if ($result) {
                 error_log('VES Change Getter - Actualización forzada exitosa, ID: ' . $result);
-                echo '<div class="notice notice-success is-dismissible"><p>Datos actualizados correctamente.</p></div>';
+                $js_script = "
+                <script>
+                    jQuery(document).ready(function() {
+                        Swal.fire({
+                            title: '¡Éxito!',
+                            text: 'Datos actualizados correctamente.',
+                            icon: 'success',
+                            confirmButtonText: 'Aceptar'
+                        });
+                    });
+                </script>";
             } else {
                 error_log('VES Change Getter - Error en actualización forzada');
-                echo '<div class="notice notice-error is-dismissible"><p>Error al actualizar datos. Revise el registro de errores.</p></div>';
+                $js_script = "
+                <script>
+                    jQuery(document).ready(function() {
+                        Swal.fire({
+                            title: 'Error',
+                            text: 'Error al actualizar datos. Revise el registro de errores.',
+                            icon: 'error',
+                            confirmButtonText: 'Aceptar'
+                        });
+                    });
+                </script>";
             }
+            
+            // Imprimir script para ejecutar SweetAlert
+            echo $js_script;
         }
         
         // Ensure we have data to display (fetch if empty)
@@ -113,10 +157,31 @@ class AdminPage {
                 $latest_rate = RatesModel::get_latest_rate();
                 if (!$latest_rate) {
                     error_log('VES Change Getter - Error: Aún no se puede obtener latest_rate después de fetch_and_store_rates');
+                    echo "
+                    <script>
+                        jQuery(document).ready(function() {
+                            Swal.fire({
+                                title: 'Error',
+                                text: 'Error al obtener los datos después de la actualización.',
+                                icon: 'error',
+                                confirmButtonText: 'Aceptar'
+                            });
+                        });
+                    </script>";
                 }
             } else {
                 error_log('VES Change Getter - Error al obtener y guardar datos');
-                echo '<div class="notice notice-error is-dismissible"><p>Error al obtener datos de la API. Revise el registro de errores.</p></div>';
+                echo "
+                <script>
+                    jQuery(document).ready(function() {
+                        Swal.fire({
+                            title: 'Error',
+                            text: 'Error al obtener datos de la API. Revise el registro de errores.',
+                            icon: 'error',
+                            confirmButtonText: 'Aceptar'
+                        });
+                    });
+                </script>";
             }
         } else {
             error_log('VES Change Getter - Se encontró último registro, ID: ' . $latest_rate['id']);
