@@ -1,0 +1,35 @@
+# Operating System files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Editor files
+.idea/
+.vscode/
+*.sublime-project
+*.sublime-workspace
+
+# WordPress debug logs
+debug.log
+
+# Compiled files
+*.min.css
+*.min.js
+
+# Dependency directories
+/node_modules/
+/vendor/
+
+# Environment files
+.env
+.env.*
+!.env.example
+
+# Backup files
+*.bak
+*.swp
+*.tmp
+*~
+
+# Placeholder for empty directories
+!.gitkeep 
