@@ -10,7 +10,7 @@
                 <div class="ves-change-getter-card__header">
                     <div class="flex justify-between items-center">
                         <div>
-                            <h2 class="text-lg font-semibold text-gray-900"><?php echo esc_html__('Tasas Actuales', 'ves-change-getter'); ?></h2>
+                            <h2 class="text-xl font-bold text-gray-900"><?php echo esc_html__('Tasas Actuales', 'ves-change-getter'); ?></h2>
                             <p class="text-sm text-gray-600"><?php echo esc_html__('Datos más recientes de la API', 'ves-change-getter'); ?></p>
                         </div>
                         <button id="ves-change-getter-fetch-btn" class="inline-flex items-center px-4 py-2 bg-blue-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-wider hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
@@ -129,7 +129,7 @@
     <!-- Historical Data Table -->
     <div class="ves-change-getter-card mb-6">
         <div class="ves-change-getter-card__header">
-            <h2 class="text-lg font-semibold text-gray-900"><?php echo esc_html__('Historial de Tasas', 'ves-change-getter'); ?></h2>
+            <h2 class="text-xl font-bold text-gray-900"><?php echo esc_html__('Historial de Tasas', 'ves-change-getter'); ?></h2>
             <p class="text-sm text-gray-600"><?php echo esc_html__('Registros históricos de tasas de cambio', 'ves-change-getter'); ?></p>
         </div>
         <div class="overflow-x-auto">
@@ -197,7 +197,7 @@
         <div class="w-full px-2 mb-4">
             <div class="ves-change-getter-card">
                 <div class="ves-change-getter-card__header">
-                    <h2 class="text-lg font-semibold text-gray-900"><?php echo esc_html__('Información de API', 'ves-change-getter'); ?></h2>
+                    <h2 class="text-xl font-bold text-gray-900"><?php echo esc_html__('Información de API', 'ves-change-getter'); ?></h2>
                     <p class="text-sm text-gray-600"><?php echo esc_html__('Endpoints disponibles para consulta', 'ves-change-getter'); ?></p>
                 </div>
                 <div class="ves-change-getter-card__body">
