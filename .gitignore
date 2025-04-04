@@ -1,35 +1,44 @@
-# Operating System files
+# Archivos y directorios específicos del sistema
 .DS_Store
 Thumbs.db
 desktop.ini
 
-# Editor files
+# Archivos de configuración local
+*.log
+*.sqlite
+
+# Directorios generados por IDEs y editores
 .idea/
 .vscode/
 *.sublime-project
 *.sublime-workspace
 
-# WordPress debug logs
-debug.log
+# Node.js
+node_modules/
+npm-debug.log
+yarn-error.log
+yarn-debug.log
 
-# Compiled files
+# Archivos temporales
+*.tmp
+*.bak
+*.swp
+*~
+
+# Archivos de documentación privada
+DocInterna.txt
+
+# Editor files
 *.min.css
 *.min.js
 
 # Dependency directories
-/node_modules/
 /vendor/
 
 # Environment files
 .env
 .env.*
 !.env.example
-
-# Backup files
-*.bak
-*.swp
-*.tmp
-*~
 
 # Placeholder for empty directories
 !.gitkeep 
