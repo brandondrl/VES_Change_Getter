@@ -5,7 +5,7 @@
     
     <div class="flex flex-wrap -mx-2 mb-6">
         <!-- Current Rates Card -->
-        <div class="w-full px-2 mb-4 lg:w-1/2">
+        <div class="w-full px-2 mb-4">
             <div class="ves-change-getter-card">
                 <div class="ves-change-getter-card__header">
                     <div class="flex justify-between items-center">
@@ -127,68 +127,72 @@
     </div>
     
     <!-- Historical Data Table -->
-    <div class="ves-change-getter-card mb-6">
-        <div class="ves-change-getter-card__header">
-            <h2 class="text-xl font-bold text-gray-900"><?php echo esc_html__('Historial de Tasas', 'ves-change-getter'); ?></h2>
-            <p class="text-sm text-gray-600"><?php echo esc_html__('Registros históricos de tasas de cambio', 'ves-change-getter'); ?></p>
-        </div>
-        <div class="overflow-x-auto">
-            <table class="ves-change-getter-table ves-change-getter-table--striped">
-                <thead>
-                    <tr>
-                        <th><?php esc_html_e('ID', 'ves-change-getter'); ?></th>
-                        <th><?php esc_html_e('Fecha', 'ves-change-getter'); ?></th>
-                        <th><?php esc_html_e('BCV', 'ves-change-getter'); ?></th>
-                        <th><?php esc_html_e('Promedio', 'ves-change-getter'); ?></th>
-                        <th><?php esc_html_e('Paralelo', 'ves-change-getter'); ?></th>
-                        <th><?php esc_html_e('Actualización', 'ves-change-getter'); ?></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php if (!empty($all_rates)): ?>
-                        <?php foreach ($all_rates as $rate): ?>
+    <div class="flex flex-wrap -mx-2 mb-6">
+        <div class="w-full px-2 mb-4">
+            <div class="ves-change-getter-card">
+                <div class="ves-change-getter-card__header">
+                    <h2 class="text-xl font-bold text-gray-900"><?php echo esc_html__('Historial de Tasas', 'ves-change-getter'); ?></h2>
+                    <p class="text-sm text-gray-600"><?php echo esc_html__('Registros históricos de tasas de cambio', 'ves-change-getter'); ?></p>
+                </div>
+                <div class="overflow-x-auto">
+                    <table class="ves-change-getter-table ves-change-getter-table--striped">
+                        <thead>
                             <tr>
-                                <td><?php echo esc_html($rate['id']); ?></td>
-                                <td class="ves-change-getter-date"><?php echo esc_html($rate['fecha']); ?></td>
-                                <td>
-                                    <?php 
-                                    if (isset($rate['json_decoded']['rates']['bcv'])) {
-                                        echo esc_html(number_format($rate['json_decoded']['rates']['bcv']['value'], 2, ',', '.')) . ' Bs.';
-                                    } else {
-                                        echo '-';
-                                    }
-                                    ?>
-                                </td>
-                                <td>
-                                    <?php 
-                                    if (isset($rate['json_decoded']['rates']['average'])) {
-                                        echo esc_html(number_format($rate['json_decoded']['rates']['average']['value'], 2, ',', '.')) . ' Bs.';
-                                    } else {
-                                        echo '-';
-                                    }
-                                    ?>
-                                </td>
-                                <td>
-                                    <?php 
-                                    if (isset($rate['json_decoded']['rates']['parallel'])) {
-                                        echo esc_html(number_format($rate['json_decoded']['rates']['parallel']['value'], 2, ',', '.')) . ' Bs.';
-                                    } else {
-                                        echo '-';
-                                    }
-                                    ?>
-                                </td>
-                                <td class="ves-change-getter-date"><?php echo esc_html($rate['update_date']); ?></td>
+                                <th><?php esc_html_e('ID', 'ves-change-getter'); ?></th>
+                                <th><?php esc_html_e('Fecha', 'ves-change-getter'); ?></th>
+                                <th><?php esc_html_e('BCV', 'ves-change-getter'); ?></th>
+                                <th><?php esc_html_e('Promedio', 'ves-change-getter'); ?></th>
+                                <th><?php esc_html_e('Paralelo', 'ves-change-getter'); ?></th>
+                                <th><?php esc_html_e('Actualización', 'ves-change-getter'); ?></th>
                             </tr>
-                        <?php endforeach; ?>
-                    <?php else: ?>
-                        <tr>
-                            <td colspan="6" class="text-center py-4 text-gray-500">
-                                <?php esc_html_e('No hay registros disponibles.', 'ves-change-getter'); ?>
-                            </td>
-                        </tr>
-                    <?php endif; ?>
-                </tbody>
-            </table>
+                        </thead>
+                        <tbody>
+                            <?php if (!empty($all_rates)): ?>
+                                <?php foreach ($all_rates as $rate): ?>
+                                    <tr>
+                                        <td><?php echo esc_html($rate['id']); ?></td>
+                                        <td class="ves-change-getter-date"><?php echo esc_html($rate['fecha']); ?></td>
+                                        <td>
+                                            <?php 
+                                            if (isset($rate['json_decoded']['rates']['bcv'])) {
+                                                echo esc_html(number_format($rate['json_decoded']['rates']['bcv']['value'], 2, ',', '.')) . ' Bs.';
+                                            } else {
+                                                echo '-';
+                                            }
+                                            ?>
+                                        </td>
+                                        <td>
+                                            <?php 
+                                            if (isset($rate['json_decoded']['rates']['average'])) {
+                                                echo esc_html(number_format($rate['json_decoded']['rates']['average']['value'], 2, ',', '.')) . ' Bs.';
+                                            } else {
+                                                echo '-';
+                                            }
+                                            ?>
+                                        </td>
+                                        <td>
+                                            <?php 
+                                            if (isset($rate['json_decoded']['rates']['parallel'])) {
+                                                echo esc_html(number_format($rate['json_decoded']['rates']['parallel']['value'], 2, ',', '.')) . ' Bs.';
+                                            } else {
+                                                echo '-';
+                                            }
+                                            ?>
+                                        </td>
+                                        <td class="ves-change-getter-date"><?php echo esc_html($rate['update_date']); ?></td>
+                                    </tr>
+                                <?php endforeach; ?>
+                            <?php else: ?>
+                                <tr>
+                                    <td colspan="6" class="text-center py-4 text-gray-500">
+                                        <?php esc_html_e('No hay registros disponibles.', 'ves-change-getter'); ?>
+                                    </td>
+                                </tr>
+                            <?php endif; ?>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
         </div>
     </div>
     
