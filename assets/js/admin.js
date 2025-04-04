@@ -35,16 +35,19 @@
                 },
                 success: function(response) {
                     if (response.success) {
-                        Swal.fire({
-                            title: '¡Éxito!',
-                            text: response.data.message,
-                            icon: 'success',
-                            timer: 1500,
-                            showConfirmButton: false
-                        }).then(() => {
-                            // Reload the page to show updated data
-                            window.location.reload();
-                        });
+                        // Añadir un retraso mínimo para asegurar que la notificación de carga sea visible
+                        setTimeout(() => {
+                            Swal.fire({
+                                title: '¡Éxito!',
+                                text: response.data.message,
+                                icon: 'success',
+                                timer: 1500,
+                                showConfirmButton: false
+                            }).then(() => {
+                                // Reload the page to show updated data
+                                window.location.reload();
+                            });
+                        }, 1000); // Retraso de 1 segundo
                     } else {
                         Swal.fire({
                             title: 'Error',
