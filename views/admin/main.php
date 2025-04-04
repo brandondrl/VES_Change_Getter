@@ -134,25 +134,25 @@
                     <h2 class="text-xl font-bold text-gray-900"><?php echo esc_html__('Historial de Tasas', 'ves-change-getter'); ?></h2>
                     <p class="text-sm text-gray-600"><?php echo esc_html__('Registros históricos de tasas de cambio', 'ves-change-getter'); ?></p>
                 </div>
-                <div class="overflow-x-auto">
-                    <table class="ves-change-getter-table ves-change-getter-table--striped">
+                <div class="overflow-x-auto p-5">
+                    <table class="ves-change-getter-table ves-change-getter-table--striped mx-auto w-full shadow-sm rounded-md">
                         <thead>
-                            <tr>
-                                <th><?php esc_html_e('ID', 'ves-change-getter'); ?></th>
-                                <th><?php esc_html_e('Fecha', 'ves-change-getter'); ?></th>
-                                <th><?php esc_html_e('BCV', 'ves-change-getter'); ?></th>
-                                <th><?php esc_html_e('Promedio', 'ves-change-getter'); ?></th>
-                                <th><?php esc_html_e('Paralelo', 'ves-change-getter'); ?></th>
-                                <th><?php esc_html_e('Actualización', 'ves-change-getter'); ?></th>
+                            <tr class="bg-gray-100">
+                                <th class="text-center font-bold text-base py-4"><?php esc_html_e('ID', 'ves-change-getter'); ?></th>
+                                <th class="text-center font-bold text-base py-4"><?php esc_html_e('Fecha', 'ves-change-getter'); ?></th>
+                                <th class="text-center font-bold text-base py-4"><?php esc_html_e('BCV', 'ves-change-getter'); ?></th>
+                                <th class="text-center font-bold text-base py-4"><?php esc_html_e('Promedio', 'ves-change-getter'); ?></th>
+                                <th class="text-center font-bold text-base py-4"><?php esc_html_e('Paralelo', 'ves-change-getter'); ?></th>
+                                <th class="text-center font-bold text-base py-4"><?php esc_html_e('Actualización', 'ves-change-getter'); ?></th>
                             </tr>
                         </thead>
                         <tbody>
                             <?php if (!empty($all_rates)): ?>
                                 <?php foreach ($all_rates as $rate): ?>
                                     <tr>
-                                        <td><?php echo esc_html($rate['id']); ?></td>
-                                        <td class="ves-change-getter-date"><?php echo esc_html($rate['fecha']); ?></td>
-                                        <td>
+                                        <td class="text-center py-3"><?php echo esc_html($rate['id']); ?></td>
+                                        <td class="text-center py-3 ves-change-getter-date"><?php echo esc_html($rate['fecha']); ?></td>
+                                        <td class="text-center py-3">
                                             <?php 
                                             if (isset($rate['json_decoded']['rates']['bcv'])) {
                                                 echo esc_html(number_format($rate['json_decoded']['rates']['bcv']['value'], 2, ',', '.')) . ' Bs.';
@@ -161,7 +161,7 @@
                                             }
                                             ?>
                                         </td>
-                                        <td>
+                                        <td class="text-center py-3">
                                             <?php 
                                             if (isset($rate['json_decoded']['rates']['average'])) {
                                                 echo esc_html(number_format($rate['json_decoded']['rates']['average']['value'], 2, ',', '.')) . ' Bs.';
@@ -170,7 +170,7 @@
                                             }
                                             ?>
                                         </td>
-                                        <td>
+                                        <td class="text-center py-3">
                                             <?php 
                                             if (isset($rate['json_decoded']['rates']['parallel'])) {
                                                 echo esc_html(number_format($rate['json_decoded']['rates']['parallel']['value'], 2, ',', '.')) . ' Bs.';
@@ -179,7 +179,7 @@
                                             }
                                             ?>
                                         </td>
-                                        <td class="ves-change-getter-date"><?php echo esc_html($rate['update_date']); ?></td>
+                                        <td class="text-center py-3 ves-change-getter-date"><?php echo esc_html($rate['update_date']); ?></td>
                                     </tr>
                                 <?php endforeach; ?>
                             <?php else: ?>
