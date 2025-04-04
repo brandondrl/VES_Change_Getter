@@ -124,51 +124,6 @@
                 </div>
             </div>
         </div>
-        
-        <!-- API Info Card -->
-        <div class="w-full px-2 mb-4 lg:w-1/2">
-            <div class="ves-change-getter-card">
-                <div class="ves-change-getter-card__header">
-                    <h2 class="text-lg font-semibold text-gray-900"><?php echo esc_html__('Información de API', 'ves-change-getter'); ?></h2>
-                    <p class="text-sm text-gray-600"><?php echo esc_html__('Endpoints disponibles para consulta', 'ves-change-getter'); ?></p>
-                </div>
-                <div class="ves-change-getter-card__body">
-                    <div class="space-y-4">
-                        <div class="p-3 bg-gray-50 rounded-md">
-                            <h3 class="font-medium text-gray-900 mb-2">Endpoint para obtener la tasa más reciente</h3>
-                            <p class="mb-2 text-sm text-gray-600">Utilice el siguiente endpoint para obtener los datos más recientes:</p>
-                            <div class="flex items-center">
-                                <code class="text-sm bg-gray-100 px-2 py-1 rounded-md flex-1"><?php echo esc_url(rest_url('ves-change-getter/v1/latest')); ?></code>
-                                <button class="ml-2 p-1 text-gray-500 hover:text-gray-700 focus:outline-none" onclick="navigator.clipboard.writeText('<?php echo esc_url(rest_url('ves-change-getter/v1/latest')); ?>')">
-                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3"></path>
-                                    </svg>
-                                </button>
-                            </div>
-                        </div>
-                        
-                        <div class="p-3 bg-gray-50 rounded-md">
-                            <h3 class="font-medium text-gray-900 mb-2">Endpoint para obtener historial de tasas</h3>
-                            <p class="mb-2 text-sm text-gray-600">Utilice el siguiente endpoint para obtener el historial de tasas:</p>
-                            <div class="flex items-center">
-                                <code class="text-sm bg-gray-100 px-2 py-1 rounded-md flex-1"><?php echo esc_url(rest_url('ves-change-getter/v1/rates')); ?></code>
-                                <button class="ml-2 p-1 text-gray-500 hover:text-gray-700 focus:outline-none" onclick="navigator.clipboard.writeText('<?php echo esc_url(rest_url('ves-change-getter/v1/rates')); ?>')">
-                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3"></path>
-                                    </svg>
-                                </button>
-                            </div>
-                            <p class="mt-2 text-sm text-gray-600">Parámetros opcionales:</p>
-                            <ul class="mt-1 text-xs text-gray-600 space-y-1 ml-4 list-disc">
-                                <li><code>start_date</code>: Fecha inicial (formato YYYY-MM-DD)</li>
-                                <li><code>end_date</code>: Fecha final (formato YYYY-MM-DD)</li>
-                                <li><code>limit</code>: Número máximo de registros (por defecto: 100)</li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
     </div>
     
     <!-- Historical Data Table -->
@@ -234,6 +189,53 @@
                     <?php endif; ?>
                 </tbody>
             </table>
+        </div>
+    </div>
+    
+    <div class="flex flex-wrap -mx-2 mb-6">
+        <!-- API Info Card -->
+        <div class="w-full px-2 mb-4">
+            <div class="ves-change-getter-card">
+                <div class="ves-change-getter-card__header">
+                    <h2 class="text-lg font-semibold text-gray-900"><?php echo esc_html__('Información de API', 'ves-change-getter'); ?></h2>
+                    <p class="text-sm text-gray-600"><?php echo esc_html__('Endpoints disponibles para consulta', 'ves-change-getter'); ?></p>
+                </div>
+                <div class="ves-change-getter-card__body">
+                    <div class="space-y-4">
+                        <div class="p-3 bg-gray-50 rounded-md">
+                            <h3 class="font-medium text-gray-900 mb-2">Endpoint para obtener la tasa más reciente</h3>
+                            <p class="mb-2 text-sm text-gray-600">Utilice el siguiente endpoint para obtener los datos más recientes:</p>
+                            <div class="flex items-center">
+                                <code class="text-sm bg-gray-100 px-2 py-1 rounded-md flex-1"><?php echo esc_url(rest_url('ves-change-getter/v1/latest')); ?></code>
+                                <button class="ml-2 p-1 text-gray-500 hover:text-gray-700 focus:outline-none" onclick="navigator.clipboard.writeText('<?php echo esc_url(rest_url('ves-change-getter/v1/latest')); ?>')">
+                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3"></path>
+                                    </svg>
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <div class="p-3 bg-gray-50 rounded-md">
+                            <h3 class="font-medium text-gray-900 mb-2">Endpoint para obtener historial de tasas</h3>
+                            <p class="mb-2 text-sm text-gray-600">Utilice el siguiente endpoint para obtener el historial de tasas:</p>
+                            <div class="flex items-center">
+                                <code class="text-sm bg-gray-100 px-2 py-1 rounded-md flex-1"><?php echo esc_url(rest_url('ves-change-getter/v1/rates')); ?></code>
+                                <button class="ml-2 p-1 text-gray-500 hover:text-gray-700 focus:outline-none" onclick="navigator.clipboard.writeText('<?php echo esc_url(rest_url('ves-change-getter/v1/rates')); ?>')">
+                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3"></path>
+                                    </svg>
+                                </button>
+                            </div>
+                            <p class="mt-2 text-sm text-gray-600">Parámetros opcionales:</p>
+                            <ul class="mt-1 text-xs text-gray-600 space-y-1 ml-4 list-disc">
+                                <li><code>start_date</code>: Fecha inicial (formato YYYY-MM-DD)</li>
+                                <li><code>end_date</code>: Fecha final (formato YYYY-MM-DD)</li>
+                                <li><code>limit</code>: Número máximo de registros (por defecto: 100)</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div> 
