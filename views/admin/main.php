@@ -179,7 +179,7 @@
                                             }
                                             ?>
                                         </td>
-                                        <td class="text-center py-3 ves-change-getter-date"><?php echo esc_html($rate['update_date']); ?></td>
+                                        <td class="text-center py-3 ves-change-getter-date"><?php echo date('H:i:s', strtotime($rate['update_date'])); ?></td>
                                     </tr>
                                 <?php endforeach; ?>
                             <?php else: ?>
