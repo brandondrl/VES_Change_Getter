@@ -151,7 +151,7 @@
                                 <?php foreach ($all_rates as $rate): ?>
                                     <tr>
                                         <td class="text-center py-3"><?php echo esc_html($rate['id']); ?></td>
-                                        <td class="text-center py-3 ves-change-getter-date"><?php echo esc_html($rate['fecha']); ?></td>
+                                        <td class="text-center py-3"><?php echo date('Y-m-d', strtotime($rate['fecha'])); ?></td>
                                         <td class="text-center py-3">
                                             <?php 
                                             if (isset($rate['json_decoded']['rates']['bcv'])) {
