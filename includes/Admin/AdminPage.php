@@ -29,20 +29,26 @@ class AdminPage {
         $screen = get_current_screen();
         
         if (isset($screen->id) && $screen->id === 'toplevel_page_ves-change-getter') {
+            // Generar un timestamp para forzar la recarga y evitar caché
+            $version = VES_CHANGE_GETTER_VERSION . '.' . time();
+            
+            // Asegurar que los dashicons estén cargados
+            wp_enqueue_style('dashicons');
+            
             // Enqueue Tailwind CSS
             wp_enqueue_style(
                 'ves-change-getter-tailwind',
                 VES_CHANGE_GETTER_URL . 'assets/css/tailwind.min.css',
                 [],
-                VES_CHANGE_GETTER_VERSION
+                $version
             );
             
             // Enqueue custom styles
             wp_enqueue_style(
                 'ves-change-getter-admin',
                 VES_CHANGE_GETTER_URL . 'assets/css/admin.css',
-                ['ves-change-getter-tailwind'],
-                VES_CHANGE_GETTER_VERSION
+                ['ves-change-getter-tailwind', 'dashicons'],
+                $version
             );
         }
     }

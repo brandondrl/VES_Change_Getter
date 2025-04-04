@@ -90,4 +90,26 @@
 
 .ves-change-getter-pulse {
     animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+/* Dashicons personalizados para tarjetas de tasas */
+.ves-change-getter-admin-wrap .dashicons {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+}
+
+.ves-change-getter-admin-wrap .rounded-full {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 60px;
+    height: 60px;
+    transition: all 0.3s ease;
+}
+
+.ves-change-getter-admin-wrap .flex-1:hover .rounded-full {
+    transform: scale(1.05);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 } 

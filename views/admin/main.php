@@ -33,7 +33,7 @@
                         </div>
                         
                         <?php if (isset($latest_rate['json_decoded']['rates'])): ?>
-                            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                            <div class="flex flex-wrap gap-4">
                                 <?php 
                                 $rates = $latest_rate['json_decoded']['rates'];
                                 $rate_types = [
@@ -51,36 +51,47 @@
                                     ]
                                 ];
                                 
-                                foreach ($rate_types as $type => $info):
+                                // Orden solicitado
+                                $display_order = ['bcv', 'average', 'parallel'];
+                                
+                                foreach ($display_order as $type):
                                     if (isset($rates[$type])):
+                                        $info = $rate_types[$type];
                                 ?>
-                                <div class="bg-white overflow-hidden shadow rounded-lg border border-gray-200">
-                                    <div class="px-4 py-5 sm:p-6">
-                                        <div class="flex items-center">
-                                            <div class="flex-shrink-0 bg-<?php echo $info['color']; ?>-100 rounded-md p-3">
-                                                <svg class="h-6 w-6 text-<?php echo $info['color']; ?>-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                                                </svg>
-                                            </div>
-                                            <div class="ml-5 w-0 flex-1">
-                                                <dl>
-                                                    <dt class="text-sm font-medium text-gray-500 truncate">
-                                                        <?php echo esc_html($info['title']); ?>
-                                                    </dt>
-                                                    <dd>
-                                                        <div class="text-lg font-semibold text-gray-900">
-                                                            <?php echo esc_html(number_format($rates[$type]['value'], 2, ',', '.')); ?> Bs.
-                                                        </div>
-                                                    </dd>
-                                                    <dd class="mt-1">
-                                                        <span class="text-xs text-gray-500">
-                                                            <?php echo esc_html($rates[$type]['catch_date']); ?>
-                                                        </span>
-                                                    </dd>
-                                                </dl>
-                                            </div>
-                                        </div>
+                                <div class="flex-1 p-4 bg-white rounded-lg shadow-md text-center flex flex-col items-center justify-center">
+                                    <!-- Icono específico para cada tipo de rate -->
+                                    <div class="rounded-full p-3 mb-4" style="background-color: <?php 
+                                        if ($type === 'bcv') {
+                                            echo '#bfdbfe'; // bg-blue-200 color
+                                        } elseif ($type === 'average') {
+                                            echo '#dcfce7'; // bg-green-100 color
+                                        } else {
+                                            echo '#fee2e2'; // bg-red-100 color
+                                        }
+                                    ?>;">
+                                        <?php if ($type === 'bcv'): ?>
+                                            <span class="dashicons dashicons-bank" style="font-size: 32px; width: 32px; height: 32px; color: #2563eb;"></span>
+                                        <?php elseif ($type === 'average'): ?>
+                                            <span class="dashicons dashicons-calculator" style="font-size: 32px; width: 32px; height: 32px; color: #16a34a;"></span>
+                                        <?php elseif ($type === 'parallel'): ?>
+                                            <span class="dashicons dashicons-chart-line" style="font-size: 32px; width: 32px; height: 32px; color: #dc2626;"></span>
+                                        <?php endif; ?>
                                     </div>
+                                    <dl class="text-center">
+                                        <dt class="text-lg font-medium text-gray-700 mb-1">
+                                            <?php echo esc_html($info['title']); ?>
+                                        </dt>
+                                        <dd>
+                                            <div class="text-2xl font-bold text-gray-900">
+                                                <?php echo esc_html(number_format($rates[$type]['value'], 2, ',', '.')); ?> Bs.
+                                            </div>
+                                        </dd>
+                                        <dd class="mt-2">
+                                            <span class="text-sm text-gray-500">
+                                                <?php echo esc_html($rates[$type]['catch_date']); ?>
+                                            </span>
+                                        </dd>
+                                    </dl>
                                 </div>
                                 <?php
                                     endif;
@@ -172,8 +183,8 @@
                         <th><?php esc_html_e('ID', 'ves-change-getter'); ?></th>
                         <th><?php esc_html_e('Fecha', 'ves-change-getter'); ?></th>
                         <th><?php esc_html_e('BCV', 'ves-change-getter'); ?></th>
-                        <th><?php esc_html_e('Paralelo', 'ves-change-getter'); ?></th>
                         <th><?php esc_html_e('Promedio', 'ves-change-getter'); ?></th>
+                        <th><?php esc_html_e('Paralelo', 'ves-change-getter'); ?></th>
                         <th><?php esc_html_e('Actualización', 'ves-change-getter'); ?></th>
                     </tr>
                 </thead>
@@ -194,8 +205,8 @@
                                 </td>
                                 <td>
                                     <?php 
-                                    if (isset($rate['json_decoded']['rates']['parallel'])) {
-                                        echo esc_html(number_format($rate['json_decoded']['rates']['parallel']['value'], 2, ',', '.')) . ' Bs.';
+                                    if (isset($rate['json_decoded']['rates']['average'])) {
+                                        echo esc_html(number_format($rate['json_decoded']['rates']['average']['value'], 2, ',', '.')) . ' Bs.';
                                     } else {
                                         echo '-';
                                     }
@@ -203,8 +214,8 @@
                                 </td>
                                 <td>
                                     <?php 
-                                    if (isset($rate['json_decoded']['rates']['average'])) {
-                                        echo esc_html(number_format($rate['json_decoded']['rates']['average']['value'], 2, ',', '.')) . ' Bs.';
+                                    if (isset($rate['json_decoded']['rates']['parallel'])) {
+                                        echo esc_html(number_format($rate['json_decoded']['rates']['parallel']['value'], 2, ',', '.')) . ' Bs.';
                                     } else {
                                         echo '-';
                                     }
