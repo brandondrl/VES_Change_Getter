@@ -65,6 +65,32 @@
             });
         });
         
+        // Inicialización de la configuración de Toast para SweetAlert2
+        const Toast = Swal.mixin({
+            toast: true,
+            position: 'top-right',
+            showConfirmButton: false,
+            timer: 2000,
+            timerProgressBar: true,
+            customClass: {
+                popup: 'swal-toast-popup'
+            },
+            didOpen: (toast) => {
+                toast.addEventListener('mouseenter', Swal.stopTimer)
+                toast.addEventListener('mouseleave', Swal.resumeTimer)
+                // Añadir margen superior al toast para evitar que se corte
+                toast.style.marginTop = '20px'
+            }
+        });
+
+        // Event listener para los botones de copiar
+        $('.ves-copy-button').on('click', function() {
+            Toast.fire({
+                icon: 'success',
+                title: 'Copiado al portapapeles'
+            });
+        });
+        
         // Format date columns in the table
         $('.ves-change-getter-date').each(function() {
             const dateStr = $(this).text();
@@ -101,5 +127,20 @@
                 $this.html('<svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7"></path></svg> Ocultar JSON');
             }
         });
+
+        // Función para mostrar notificaciones de cambio de tasa
+        function showRateChangeNotification(type, oldValue, newValue) {
+            const diff = newValue - oldValue;
+            const icon = diff > 0 ? 'warning' : (diff < 0 ? 'error' : 'info');
+            const diffText = diff > 0 ? `+${diff.toFixed(2)}` : diff.toFixed(2);
+            
+            Toast.fire({
+                icon: icon,
+                title: `Tasa ${type}: ${diffText} Bs.`
+            });
+        }
+
+        // Exponer la función a window para poder usarla desde PHP
+        window.showRateChangeNotification = showRateChangeNotification;
     });
 })(jQuery); 

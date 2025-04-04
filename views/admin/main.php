@@ -27,7 +27,7 @@
                 <div class="ves-change-getter-card__body">
                     <?php if ($latest_rate): ?>
                         <?php if (isset($latest_rate['json_decoded']['rates'])): ?>
-                            <div class="flex flex-wrap gap-4">
+                            <div class="flex flex-wrap gap-6">
                                 <?php 
                                 $rates = $latest_rate['json_decoded']['rates'];
                                 $rate_types = [
@@ -52,7 +52,7 @@
                                     if (isset($rates[$type])):
                                         $info = $rate_types[$type];
                                 ?>
-                                <div class="flex-1 p-4 bg-white rounded-lg shadow-md text-center flex flex-col items-center justify-center">
+                                <div class="flex-1 p-6 bg-white rounded-lg shadow-md text-center flex flex-col items-center justify-center min-h-[180px]">
                                     <!-- Icono específico para cada tipo de rate -->
                                     <div class="rounded-full p-3 mb-4" style="background-color: <?php 
                                         if ($type === 'bcv') {
@@ -135,24 +135,24 @@
                     <p class="text-sm text-gray-600"><?php echo esc_html__('Registros históricos de tasas de cambio', 'ves-change-getter'); ?></p>
                 </div>
                 <div class="overflow-x-auto p-5">
-                    <table class="ves-change-getter-table ves-change-getter-table--striped mx-auto w-full shadow-sm rounded-md">
+                    <table class="ves-change-getter-table mx-auto w-full shadow-sm rounded-lg border-collapse border border-gray-200">
                         <thead>
-                            <tr class="bg-gray-100">
-                                <th class="text-center font-bold text-base py-4"><?php esc_html_e('ID', 'ves-change-getter'); ?></th>
-                                <th class="text-center font-bold text-base py-4"><?php esc_html_e('Fecha', 'ves-change-getter'); ?></th>
-                                <th class="text-center font-bold text-base py-4"><?php esc_html_e('BCV', 'ves-change-getter'); ?></th>
-                                <th class="text-center font-bold text-base py-4"><?php esc_html_e('Promedio', 'ves-change-getter'); ?></th>
-                                <th class="text-center font-bold text-base py-4"><?php esc_html_e('Paralelo', 'ves-change-getter'); ?></th>
-                                <th class="text-center font-bold text-base py-4"><?php esc_html_e('Actualización', 'ves-change-getter'); ?></th>
+                            <tr class="bg-gray-100 border-b border-gray-200">
+                                <th class="text-center font-bold text-base py-4 px-3"><?php esc_html_e('ID', 'ves-change-getter'); ?></th>
+                                <th class="text-center font-bold text-base py-4 px-3"><?php esc_html_e('Fecha', 'ves-change-getter'); ?></th>
+                                <th class="text-center font-bold text-base py-4 px-3"><?php esc_html_e('BCV', 'ves-change-getter'); ?></th>
+                                <th class="text-center font-bold text-base py-4 px-3"><?php esc_html_e('Promedio', 'ves-change-getter'); ?></th>
+                                <th class="text-center font-bold text-base py-4 px-3"><?php esc_html_e('Paralelo', 'ves-change-getter'); ?></th>
+                                <th class="text-center font-bold text-base py-4 px-3"><?php esc_html_e('Actualización', 'ves-change-getter'); ?></th>
                             </tr>
                         </thead>
                         <tbody>
                             <?php if (!empty($all_rates)): ?>
                                 <?php foreach ($all_rates as $rate): ?>
-                                    <tr>
-                                        <td class="text-center py-3"><?php echo esc_html($rate['id']); ?></td>
-                                        <td class="text-center py-3"><?php echo date('Y-m-d', strtotime($rate['fecha'])); ?></td>
-                                        <td class="text-center py-3">
+                                    <tr class="border-b border-gray-200 hover:bg-gray-50 transition duration-150 ease-in-out">
+                                        <td class="text-center py-3 px-3"><?php echo esc_html($rate['id']); ?></td>
+                                        <td class="text-center py-3 px-3"><?php echo date('Y-m-d', strtotime($rate['fecha'])); ?></td>
+                                        <td class="text-center py-3 px-3 font-medium text-blue-700">
                                             <?php 
                                             if (isset($rate['json_decoded']['rates']['bcv'])) {
                                                 echo esc_html(number_format($rate['json_decoded']['rates']['bcv']['value'], 2, ',', '.')) . ' Bs.';
@@ -161,7 +161,7 @@
                                             }
                                             ?>
                                         </td>
-                                        <td class="text-center py-3">
+                                        <td class="text-center py-3 px-3 font-medium text-green-700">
                                             <?php 
                                             if (isset($rate['json_decoded']['rates']['average'])) {
                                                 echo esc_html(number_format($rate['json_decoded']['rates']['average']['value'], 2, ',', '.')) . ' Bs.';
@@ -170,7 +170,7 @@
                                             }
                                             ?>
                                         </td>
-                                        <td class="text-center py-3">
+                                        <td class="text-center py-3 px-3 font-medium text-red-700">
                                             <?php 
                                             if (isset($rate['json_decoded']['rates']['parallel'])) {
                                                 echo esc_html(number_format($rate['json_decoded']['rates']['parallel']['value'], 2, ',', '.')) . ' Bs.';
@@ -179,7 +179,7 @@
                                             }
                                             ?>
                                         </td>
-                                        <td class="text-center py-3 ves-change-getter-date"><?php echo date('H:i:s', strtotime($rate['update_date'])); ?></td>
+                                        <td class="text-center py-3 px-3 ves-change-getter-date"><?php echo date('H:i:s', strtotime($rate['update_date'])); ?></td>
                                     </tr>
                                 <?php endforeach; ?>
                             <?php else: ?>
@@ -206,12 +206,12 @@
                 </div>
                 <div class="ves-change-getter-card__body">
                     <div class="space-y-4">
-                        <div class="p-3 bg-gray-50 rounded-md">
+                        <div class="p-4 bg-white rounded-lg shadow-sm border border-gray-100">
                             <h3 class="font-medium text-gray-900 mb-2">Endpoint para obtener la tasa más reciente</h3>
                             <p class="mb-2 text-sm text-gray-600">Utilice el siguiente endpoint para obtener los datos más recientes:</p>
                             <div class="flex items-center">
                                 <code class="text-sm bg-gray-100 px-2 py-1 rounded-md flex-1"><?php echo esc_url(rest_url('ves-change-getter/v1/latest')); ?></code>
-                                <button class="ml-2 p-1 text-gray-500 hover:text-gray-700 focus:outline-none" onclick="navigator.clipboard.writeText('<?php echo esc_url(rest_url('ves-change-getter/v1/latest')); ?>')">
+                                <button class="ves-copy-button ml-2 p-1 text-gray-500 hover:text-blue-600 transition duration-150 ease-in-out focus:outline-none" onclick="navigator.clipboard.writeText('<?php echo esc_url(rest_url('ves-change-getter/v1/latest')); ?>')">
                                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3"></path>
                                     </svg>
@@ -219,12 +219,12 @@
                             </div>
                         </div>
                         
-                        <div class="p-3 bg-gray-50 rounded-md">
+                        <div class="p-4 bg-white rounded-lg shadow-sm border border-gray-100">
                             <h3 class="font-medium text-gray-900 mb-2">Endpoint para obtener historial de tasas</h3>
                             <p class="mb-2 text-sm text-gray-600">Utilice el siguiente endpoint para obtener el historial de tasas:</p>
                             <div class="flex items-center">
                                 <code class="text-sm bg-gray-100 px-2 py-1 rounded-md flex-1"><?php echo esc_url(rest_url('ves-change-getter/v1/rates')); ?></code>
-                                <button class="ml-2 p-1 text-gray-500 hover:text-gray-700 focus:outline-none" onclick="navigator.clipboard.writeText('<?php echo esc_url(rest_url('ves-change-getter/v1/rates')); ?>')">
+                                <button class="ves-copy-button ml-2 p-1 text-gray-500 hover:text-blue-600 transition duration-150 ease-in-out focus:outline-none" onclick="navigator.clipboard.writeText('<?php echo esc_url(rest_url('ves-change-getter/v1/rates')); ?>')">
                                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3"></path>
                                     </svg>
