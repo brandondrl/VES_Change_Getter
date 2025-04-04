@@ -26,13 +26,6 @@
                 </div>
                 <div class="ves-change-getter-card__body">
                     <?php if ($latest_rate): ?>
-                        <div>
-                            <p class="text-sm text-gray-500 mb-4">
-                                <span class="font-medium text-gray-900"><?php esc_html_e('Última actualización:', 'ves-change-getter'); ?></span>
-                                <span class="ves-change-getter-date"><?php echo esc_html($latest_rate['fecha']); ?></span>
-                            </p>
-                        </div>
-                        
                         <?php if (isset($latest_rate['json_decoded']['rates'])): ?>
                             <div class="flex flex-wrap gap-4">
                                 <?php 
@@ -99,7 +92,7 @@
                                 endforeach;
                                 ?>
                             </div>
-                        
+                            
                             <div class="mt-4 p-3 bg-gray-50 rounded-md">
                                 <button class="json-toggle inline-flex items-center text-sm text-blue-600 hover:text-blue-700 focus:outline-none">
                                     <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -110,6 +103,13 @@
                                 <div class="json-content hidden mt-2 p-3 bg-gray-100 rounded-md overflow-x-auto">
                                     <pre class="text-xs text-gray-800"><?php echo esc_html(json_encode($latest_rate['json_decoded'], JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE)); ?></pre>
                                 </div>
+                            </div>
+                            
+                            <div class="mt-4" style="text-align: right;">
+                                <p class="text-xs text-gray-500">
+                                    <span class="font-medium text-gray-900"><?php esc_html_e('Última actualización:', 'ves-change-getter'); ?></span>
+                                    <span class="ves-change-getter-date"><?php echo esc_html($latest_rate['fecha']); ?></span>
+                                </p>
                             </div>
                         <?php else: ?>
                             <div class="p-4 text-center text-gray-500">
