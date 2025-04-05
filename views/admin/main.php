@@ -138,12 +138,11 @@
                     <table class="ves-change-getter-table mx-auto w-full shadow-sm rounded-lg border-collapse border border-gray-200">
                         <thead>
                             <tr class="bg-gray-100 border-b border-gray-200">
-                                <th class="text-center font-bold text-base py-4 px-3"><?php esc_html_e('ID', 'ves-change-getter'); ?></th>
-                                <th class="text-center font-bold text-base py-4 px-3"><?php esc_html_e('Fecha', 'ves-change-getter'); ?></th>
-                                <th class="text-center font-bold text-base py-4 px-3"><?php esc_html_e('BCV', 'ves-change-getter'); ?></th>
-                                <th class="text-center font-bold text-base py-4 px-3"><?php esc_html_e('Promedio', 'ves-change-getter'); ?></th>
-                                <th class="text-center font-bold text-base py-4 px-3"><?php esc_html_e('Paralelo', 'ves-change-getter'); ?></th>
-                                <th class="text-center font-bold text-base py-4 px-3"><?php esc_html_e('Actualización', 'ves-change-getter'); ?></th>
+                                <th class="text-center font-bold text-base py-4 px-3 w-[5%]"><?php esc_html_e('ID', 'ves-change-getter'); ?></th>
+                                <th class="text-center font-bold text-base py-4 px-3 w-[30%]"><?php esc_html_e('BCV', 'ves-change-getter'); ?></th>
+                                <th class="text-center font-bold text-base py-4 px-3 w-[30%]"><?php esc_html_e('Promedio', 'ves-change-getter'); ?></th>
+                                <th class="text-center font-bold text-base py-4 px-3 w-[30%]"><?php esc_html_e('Paralelo', 'ves-change-getter'); ?></th>
+                                <th class="text-center font-bold text-base py-4 px-3 w-[15%]"><?php esc_html_e('Creado el', 'ves-change-getter'); ?></th>
                             </tr>
                         </thead>
                         <tbody>
@@ -151,35 +150,87 @@
                                 <?php foreach ($all_rates as $rate): ?>
                                     <tr class="border-b border-gray-200 hover:bg-gray-50 transition duration-150 ease-in-out">
                                         <td class="text-center py-3 px-3"><?php echo esc_html($rate['id']); ?></td>
-                                        <td class="text-center py-3 px-3"><?php echo date('Y-m-d', strtotime($rate['fecha'])); ?></td>
-                                        <td class="text-center py-3 px-3 font-medium text-blue-700">
+                                        <td class="py-3 px-3 text-center">
                                             <?php 
                                             if (isset($rate['json_decoded']['rates']['bcv'])) {
-                                                echo esc_html(number_format($rate['json_decoded']['rates']['bcv']['value'], 2, ',', '.')) . ' Bs.';
+                                                echo '<div class="font-medium text-blue-700">' . esc_html(number_format($rate['json_decoded']['rates']['bcv']['value'], 2, ',', '.')) . ' Bs.</div>';
+                                                
+                                                // Extraer y formatear fecha y hora desde catch_date
+                                                $date_str = $rate['json_decoded']['rates']['bcv']['catch_date'];
+                                                if (!empty($date_str)) {
+                                                    // Intentar diferentes formatos de fecha
+                                                    $date_time = strtotime($date_str);
+                                                    if ($date_time) {
+                                                        echo '<div class="text-xs text-gray-500 mt-1">';
+                                                        echo 'Fecha: ' . date('d/m/Y', $date_time) . '<br>';
+                                                        echo 'Hora: ' . date('h:i A', $date_time);
+                                                        echo '</div>';
+                                                    } else {
+                                                        // Si no podemos parsear, mostrar la cadena original
+                                                        echo '<div class="text-xs text-gray-500 mt-1">' . $date_str . '</div>';
+                                                    }
+                                                }
                                             } else {
                                                 echo '-';
                                             }
                                             ?>
                                         </td>
-                                        <td class="text-center py-3 px-3 font-medium text-green-700">
+                                        <td class="py-3 px-3 text-center">
                                             <?php 
                                             if (isset($rate['json_decoded']['rates']['average'])) {
-                                                echo esc_html(number_format($rate['json_decoded']['rates']['average']['value'], 2, ',', '.')) . ' Bs.';
+                                                echo '<div class="font-medium text-green-700">' . esc_html(number_format($rate['json_decoded']['rates']['average']['value'], 2, ',', '.')) . ' Bs.</div>';
+                                                
+                                                // Extraer y formatear fecha y hora desde catch_date
+                                                $date_str = $rate['json_decoded']['rates']['average']['catch_date'];
+                                                if (!empty($date_str)) {
+                                                    // Intentar diferentes formatos de fecha
+                                                    $date_time = strtotime($date_str);
+                                                    if ($date_time) {
+                                                        echo '<div class="text-xs text-gray-500 mt-1">';
+                                                        echo 'Fecha: ' . date('d/m/Y', $date_time) . '<br>';
+                                                        echo 'Hora: ' . date('h:i A', $date_time);
+                                                        echo '</div>';
+                                                    } else {
+                                                        // Si no podemos parsear, mostrar la cadena original
+                                                        echo '<div class="text-xs text-gray-500 mt-1">' . $date_str . '</div>';
+                                                    }
+                                                }
                                             } else {
                                                 echo '-';
                                             }
                                             ?>
                                         </td>
-                                        <td class="text-center py-3 px-3 font-medium text-red-700">
+                                        <td class="py-3 px-3 text-center">
                                             <?php 
                                             if (isset($rate['json_decoded']['rates']['parallel'])) {
-                                                echo esc_html(number_format($rate['json_decoded']['rates']['parallel']['value'], 2, ',', '.')) . ' Bs.';
+                                                echo '<div class="font-medium text-red-700">' . esc_html(number_format($rate['json_decoded']['rates']['parallel']['value'], 2, ',', '.')) . ' Bs.</div>';
+                                                
+                                                // Extraer y formatear fecha y hora desde catch_date
+                                                $date_str = $rate['json_decoded']['rates']['parallel']['catch_date'];
+                                                if (!empty($date_str)) {
+                                                    // Intentar diferentes formatos de fecha
+                                                    $date_time = strtotime($date_str);
+                                                    if ($date_time) {
+                                                        echo '<div class="text-xs text-gray-500 mt-1">';
+                                                        echo 'Fecha: ' . date('d/m/Y', $date_time) . '<br>';
+                                                        echo 'Hora: ' . date('h:i A', $date_time);
+                                                        echo '</div>';
+                                                    } else {
+                                                        // Si no podemos parsear, mostrar la cadena original
+                                                        echo '<div class="text-xs text-gray-500 mt-1">' . $date_str . '</div>';
+                                                    }
+                                                }
                                             } else {
                                                 echo '-';
                                             }
                                             ?>
                                         </td>
-                                        <td class="text-center py-3 px-3 ves-change-getter-date"><?php echo date('H:i:s', strtotime($rate['update_date'])); ?></td>
+                                        <td class="text-center py-3 px-3 text-xs text-gray-500">
+                                            <?php 
+                                            $db_date = new DateTime($rate['fecha']);
+                                            echo $db_date->format('d/m/Y') . '<br>' . $db_date->format('h:i A');
+                                            ?>
+                                        </td>
                                     </tr>
                                 <?php endforeach; ?>
                             <?php else: ?>
