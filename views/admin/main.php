@@ -227,7 +227,9 @@
                                         </td>
                                         <td class="text-center py-3 px-3 text-xs text-gray-500">
                                             <?php 
-                                            $db_date = new DateTime($rate['fecha']);
+                                            // Asegurar que la fecha se muestre en GMT-4
+                                            $db_date_str = $rate['fecha'];
+                                            $db_date = new DateTime($db_date_str, new DateTimeZone('America/Caracas'));
                                             echo $db_date->format('d/m/Y') . '<br>' . $db_date->format('h:i A');
                                             ?>
                                         </td>

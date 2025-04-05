@@ -152,11 +152,17 @@ class RatesModel {
         // Calculate average
         if (isset($processed['rates']['bcv']) && isset($processed['rates']['parallel'])) {
             $average_value = ($processed['rates']['bcv']['value'] + $processed['rates']['parallel']['value']) / 2;
+            
+            // Usar zona horaria Venezuela (GMT-4)
+            $timezone = new \DateTimeZone('America/Caracas');
+            $date_time = new \DateTime('now', $timezone);
+            $formatted_date = $date_time->format('m/d/Y, h:i A');
+            
             $processed['rates']['average'] = [
                 'value' => round($average_value, 2),
-                'catch_date' => date('m/d/Y, h:i A')
+                'catch_date' => $formatted_date
             ];
-            error_log('VES Change Getter - Average calculated: ' . $average_value);
+            error_log('VES Change Getter - Average calculated: ' . $average_value . ', with date: ' . $formatted_date);
         }
         
         return json_encode($processed);
@@ -173,11 +179,18 @@ class RatesModel {
         
         global $wpdb;
         
+        // Establecer zona horaria a GMT-4 (Venezuela)
+        $timezone = new \DateTimeZone('America/Caracas');
+        $date_time = new \DateTime('now', $timezone);
+        $formatted_date = $date_time->format('Y-m-d H:i:s');
+        
+        error_log('VES Change Getter - Insertando registro con fecha GMT-4: ' . $formatted_date);
+        
         $result = $wpdb->insert(
             self::$table_name,
             [
                 'json' => $json_data,
-                'fecha' => current_time('mysql')
+                'fecha' => $formatted_date
             ],
             [
                 '%s',
@@ -221,7 +234,8 @@ class RatesModel {
             return null;
         }
         
-        $query = "SELECT * FROM " . self::$table_name . " ORDER BY fecha DESC LIMIT 1";
+        // Ordenar por ID en lugar de fecha para consistencia con el historial
+        $query = "SELECT * FROM " . self::$table_name . " ORDER BY id DESC LIMIT 1";
         error_log('VES Change Getter - Query: ' . $query);
         
         $result = $wpdb->get_row($query, ARRAY_A);
@@ -305,7 +319,7 @@ class RatesModel {
         
         $query = $wpdb->prepare(
             "SELECT * FROM " . self::$table_name . " 
-            ORDER BY fecha DESC LIMIT %d",
+            ORDER BY id DESC LIMIT %d",
             $limit
         );
         
