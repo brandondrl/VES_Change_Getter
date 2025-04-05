@@ -93,19 +93,12 @@
                                 ?>
                             </div>
                             
-                            <div class="mt-4 p-3 bg-gray-50 rounded-md">
-                                <button class="json-toggle inline-flex items-center text-sm text-blue-600 hover:text-blue-700 focus:outline-none">
-                                    <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                            <div class="mt-4 flex items-center justify-end space-x-1">
+                                <button class="json-toggle text-blue-500 hover:text-blue-600 bg-blue-50 p-1 focus:outline-none" title="Respuesta JSON - Registro desde la DB">
+                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                                     </svg>
-                                    Mostrar JSON
                                 </button>
-                                <div class="json-content hidden mt-2 p-3 bg-gray-100 rounded-md overflow-x-auto">
-                                    <pre class="text-xs text-gray-800"><?php echo esc_html(json_encode($latest_rate['json_decoded'], JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE)); ?></pre>
-                                </div>
-                            </div>
-                            
-                            <div class="mt-4" style="text-align: right;">
                                 <p class="text-xs text-gray-500">
                                     <span class="font-medium text-gray-900"><?php esc_html_e('Última actualización:', 'ves-change-getter'); ?></span>
                                     <span class="ves-change-getter-date"><?php echo esc_html($latest_rate['fecha']); ?></span>
@@ -121,6 +114,16 @@
                             <?php esc_html_e('No hay datos disponibles. Haga clic en "Actualizar datos" para obtener la información más reciente.', 'ves-change-getter'); ?>
                         </div>
                     <?php endif; ?>
+                </div>
+            </div>
+            
+            <!-- JSON Content Container -->
+            <div class="json-content hidden mt-4 bg-white rounded-lg shadow-md overflow-hidden">
+                <div class="bg-gray-50 px-4 py-2 border-b border-gray-200">
+                    <h3 class="text-sm font-medium text-gray-700">Respuesta JSON desde la Base de Datos</h3>
+                </div>
+                <div class="p-4 bg-gray-50 overflow-x-auto">
+                    <pre class="text-xs text-gray-800 whitespace-pre-wrap"><?php echo esc_html(json_encode($latest_rate['json_decoded'], JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE)); ?></pre>
                 </div>
             </div>
         </div>

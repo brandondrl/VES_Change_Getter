@@ -118,17 +118,9 @@
         
         // Collapsible JSON viewer
         $('.json-toggle').on('click', function() {
-            const $this = $(this);
-            const $jsonContent = $this.siblings('.json-content');
-            
-            $jsonContent.toggleClass('hidden');
-            
-            // Toggle icon/text
-            if ($jsonContent.hasClass('hidden')) {
-                $this.html('<svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg> Mostrar JSON');
-            } else {
-                $this.html('<svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7"></path></svg> Ocultar JSON');
-            }
+            const $card = $(this).closest('.w-full');
+            const $jsonContent = $card.find('.json-content');
+            $jsonContent.slideToggle(200);
         });
 
         // Función para mostrar notificaciones de cambio de tasa
