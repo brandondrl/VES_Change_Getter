@@ -1,14 +1,14 @@
 # VES Change Getter
 
-Un plugin para WordPress que obtiene tasas de cambio desde una API externa, las procesa y almacena en una base de datos con una arquitectura sencilla y moderna.
+Un plugin de WordPress para obtener y mostrar tasas de cambio del Bolívar Soberano (VES) contra el Dólar (USD).
 
 ## Características
 
-- Consulta automática de tasas de cambio desde la API externa
-- Procesamiento y almacenamiento de datos en la base de datos
-- Interfaz de administración moderna con Tailwind CSS
-- API RESTful para integración con otros plugins
-- Sistema de programación de tareas para actualizaciones periódicas
+- Obtiene tasas de cambio desde una API externa
+- Almacena las tasas en la base de datos de WordPress
+- Proporciona endpoints REST para acceder a los datos
+- Incluye un endpoint seguro para actualizaciones automáticas
+- Interfaz de administración para visualizar y gestionar las tasas
 
 ## Estructura del Plugin
 
@@ -42,45 +42,61 @@ ves-change-getter/
 ## Instalación
 
 1. Descarga el plugin
-2. Sube el plugin a tu directorio `/wp-content/plugins/`
-3. Activa el plugin a través del menú 'Plugins' en WordPress
-4. Visita la página de administración del plugin bajo el menú 'VES Rates'
+2. Sube el plugin a la carpeta `/wp-content/plugins/` de tu instalación de WordPress
+3. Activa el plugin desde el menú de plugins de WordPress
+
+## Configuración
+
+Para utilizar el endpoint seguro de actualización automática, debes configurar las siguientes variables en tu archivo `wp-config.php`:
+
+```php
+// Configuración para VES Change Getter API
+define('VES_API_ALLOWED_IP', 'xxx.xxx.xxx.xxx'); // Reemplaza con la IP del servidor
+define('VES_API_SECRET_TOKEN', 'xxxxxxxxxxxxxxxxxxxxxxxx'); // Reemplaza con un token seguro
+```
 
 ## Uso
 
-### Interfaz de Administración
+### Endpoints Disponibles
 
-La interfaz de administración del plugin permite:
+1. **Obtener última tasa**
+   ```
+   GET /wp-json/ves-change-getter/v1/latest
+   ```
 
-- Ver las tasas de cambio actuales
-- Actualizar manualmente las tasas desde la API externa
-- Ver el historial de tasas almacenadas
-- Obtener información sobre los endpoints de la API
+2. **Obtener tasas por rango de fechas**
+   ```
+   GET /wp-json/ves-change-getter/v1/rates?start_date=2024-01-01&end_date=2024-01-31
+   ```
 
-### API RESTful
+3. **Actualización segura de tasas (para uso con cronjob)**
+   ```
+   GET /wp-json/ves-change-getter/v1/refresh-rates?token=TU_TOKEN_SECRETO
+   ```
 
-El plugin expone los siguientes endpoints:
+### Configuración del Cronjob
 
-1. **Obtener la tasa más reciente**
-   - Endpoint: `/wp-json/ves-change-getter/v1/latest`
-   - Método: GET
+Para configurar la actualización automática de tasas, puedes usar el siguiente comando en tu cronjob:
 
-2. **Obtener historial de tasas**
-   - Endpoint: `/wp-json/ves-change-getter/v1/rates`
-   - Método: GET
-   - Parámetros opcionales:
-     - `start_date`: Fecha inicial (formato YYYY-MM-DD)
-     - `end_date`: Fecha final (formato YYYY-MM-DD)
-     - `limit`: Número máximo de registros (por defecto: 100)
+```bash
+# Actualizar tasas cada hora
+0 * * * * curl "https://tudominio.com/wp-json/ves-change-getter/v1/refresh-rates?token=TU_TOKEN_SECRETO" > /dev/null 2>&1
+```
 
-## Requerimientos
+Asegúrate de:
+1. Reemplazar `TU_TOKEN_SECRETO` con el valor definido en `VES_API_SECRET_TOKEN`
+2. Verificar que la IP del servidor coincida con `VES_API_ALLOWED_IP`
+3. Ajustar la frecuencia del cronjob según tus necesidades
 
-- WordPress 5.2 o superior
-- PHP 7.2 o superior
+## Requisitos
+
+- WordPress 5.0 o superior
+- PHP 7.4 o superior
+- MySQL 5.6 o superior
 
 ## Licencia
 
-Este plugin está licenciado bajo la GPL v2 o posterior.
+Este plugin está licenciado bajo la Licencia Pública General de GNU v2 o posterior.
 
 ## Créditos
 
